@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Preferences from './Preferences'
 import {CanceledIcon} from '../components/icons/Notifications'
+import { RewardIcon } from '../components/icons/Common'
+import { BellIcon } from '../components/icons/Landing'
 
 const Container = styled.div`
     position: absolute;
@@ -156,7 +158,11 @@ const Notifications = ({notis}) => {
        {!profile ?<NotiBox> 
         {notis && notis.map((noti) => <NotiItem>            
             <Link href={`/project/${noti.project}`}><Row>            
-                 <IconWrapper>{noti.type === 'projectCanceled' && <CanceledIcon width={25} height={25}/>}</IconWrapper>
+                 <IconWrapper>
+                    {noti.type === 'projectCanceled' && <CanceledIcon width={15} height={15}/>}
+                    {noti.type === 'rewardAdded' && <RewardIcon width={15}/>}
+                    {noti.type === 'projectUpdate' && <BellIcon/>}
+                </IconWrapper>
                 <Col><Title>{noti.title}</Title><Desc>{noti.description}</Desc></Col>
                 <Col>
                      {noti.isRead === false ? <Unread>New</Unread> : <HidUnread></HidUnread>}

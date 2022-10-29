@@ -34,7 +34,7 @@ const InputContainer = ({label, placeholder,onChange, description, type}) => {
             {type === 'number' &&  <input className="input_style" type="number" placeholder={placeholder} onChange={onChange}/> }
             {type === 'textArea' &&  <textarea className="input_style" type="text" placeholder={placeholder} onChange={onChange}/> }
             {type === 'text' && <input className="input_style" type="text" placeholder={placeholder} onChange={onChange} />}  
-         <p className="input_description">{description}</p>
+         <div className="input_description">{description}</div>
         </div>
     </Container>
 }

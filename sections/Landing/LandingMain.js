@@ -40,10 +40,16 @@ const HeadTitle = styled.div`
 
 const HeadSub = styled.div`
     margin-bottom: 4%;
+    font-family: 'Neucha';
+    color: white;
+    font-size: 1.4em;
 `
 
 const HeadDesc = styled.div`
-
+    color: #F0F0F0;
+    font-family: 'Neucha';
+    font-size: 1.2em;
+    font-style: italic;
 `
 
 const ExpTitle = styled.div`
@@ -178,7 +184,7 @@ export const LandingSvg = ({width,height}) => {
     {expTitle !== '' && <Explainer><ExpTitle>{expTitle}</ExpTitle><ExpSub>{expDesc}</ExpSub></Explainer>}
     <TitleBox>
         <HeadTitle>Eyeseek Funding</HeadTitle>
-        <HeadSub>Net generation of crowdfunding</HeadSub>
+        <HeadSub>Next generation of crowdfunding</HeadSub>
         <HeadDesc>by web3</HeadDesc>
     </TitleBox>
 

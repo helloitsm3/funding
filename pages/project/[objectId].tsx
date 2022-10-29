@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useMoralisQuery } from 'react-moralis'
 
-import ProjectDetail from "../../sections/ProjectDetail"
+import ProjectDetail from "../../sections/ProjectDetail/ProjectDetail"
 
 const Container = styled.div`
   margin-top: 5%;

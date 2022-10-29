@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import LatestProjects from "../sections/Landing/LatestProjects";
 import Footer from "../sections/Footer";
-import ProjectDetail from "../sections/ProjectDetail"
+import ProjectDetail from "../sections/ProjectDetail/ProjectDetail"
 import NotAuth from '../sections/NotAuth'
 import NotProject from '../sections/NotProject'
 

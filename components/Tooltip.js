@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   position: absolute;
-  top: -30px;
+  top: ${props => props.margin ? `${props.margin}` : '-30px'} ;
   background: black;
   border-radius: 5px;
   padding: 5px;
@@ -11,8 +11,8 @@ const Container = styled.div`
   border: 1px solid #2F2F2F;
 `
 
-const Tooltip = ({text}) => {
-    return <Container>
+const Tooltip = ({text, margin}) => {
+    return <Container margin={margin}>
         {text}
     </Container>
 }

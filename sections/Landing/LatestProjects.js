@@ -19,7 +19,8 @@ const ProjectBox = styled.div`
 const LatestProjects = ({ data, my }) => {
 
     // TBD filter for personalization
-    const filteredTech = data.filter((project) => {project.cateogory === "Web3"}) // Wrong, empty array
+    console.log(data)
+    const filteredTech = data.filter((project) => {project.state === 1}) // Wrong, empty array
     console.log(filteredTech)
     const filteredFirst = data.slice(0, 6)
     const filteredSecond = data.slice(7, 13)

@@ -1,12 +1,12 @@
 import {useState} from 'react'
 import styled from 'styled-components'
-import donation from '../abi/donation.json'
+import donation from '../../abi/donation.json'
 import { useContractRead } from 'wagmi'
 import Link from 'next/link'
 
-import ButtonAlt from "../components/buttons/ButtonAlt"
-import Socials from '../components/buttons/Socials'
-import Bookmark from '../components/functional/Bookmark'
+import ButtonAlt from "../../components/buttons/ButtonAlt"
+import Socials from '../../components/buttons/Socials'
+import Bookmark from '../../components/functional/Bookmark'
 
 
 const RightPart = styled.div`

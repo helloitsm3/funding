@@ -2,21 +2,23 @@ import { useState } from "react";
 import { useApp } from "../../utils/appContext";
 import { useAccount } from 'wagmi';
 import Lottie from "react-lottie";
+import Image from "next/image";
+import { usePrepareContractWrite, useContractEvent, useContractWrite, useNetwork } from "wagmi";
+import axios from "axios";
+import Link from "next/link";
+
 
 import SectionTitle from "../../../components/typography/SectionTitle";
 import { ButtonRow } from "../SetRewards/StyleWrapper";
 import { MainContainer, NextButton } from "../Category/StyleWrapper";
-import { RulesContainer, RulesTitle, WarningBox, Li, Row, ImageBox, Ok, TxStatus, LogRow, Ref, Summary, AnimBox, Err, InfoTag, SumItem, SumTitle, SumValue, SumHalf, Divider, SumRow, SumHead } from "./StyleWrapper";
+import { RulesContainer, RulesTitle, WarningBox, Li, Row, ImageBox, Ok, TxStatus, LogRow, Ref, Summary, AnimBox, Err, InfoTag, SumItem, SumTitle, SumValue, SumHalf, SumRow, SumHead, EyeBox } from "./StyleWrapper";
 import FaqCard from "../../../components/cards/FaqCard";
 import { BookIcon } from "../../../components/icons/Common";
 import donation from '../../../abi/donation.json'
 import successAnimation from '../../../data/successAnimation.json'
 import errorAnimation from '../../../data/errorAnimation.json'
 import smallLoading from '../../../data/smallLoading.json'
-
-import { usePrepareContractWrite, useContractEvent, useContractWrite, useNetwork } from "wagmi";
-import axios from "axios";
-import Link from "next/link";
+import Eye10 from '../../../public/Eye10.png'
 
 
 // Animation configs 
@@ -58,7 +60,7 @@ const texts = {
 
 const Create = ({ setStep }) => {
     const { appState } = useApp();
-    const { pTitle, pDesc, category, subcategory, pm1, pType } = appState;
+    const { pTitle, pDesc, category, subcategory, pm1, pType,rewards } = appState;
     const [ev, setEv] = useState(false)
     const [evErr, setEvErr] = useState(false)
     const [error, setError] = useState(false)
@@ -151,7 +153,6 @@ const Create = ({ setStep }) => {
         <MainContainer>
             <SectionTitle title='Create project' subtitle='Meet crowdfunding rules' />
             <RulesContainer>
-                <i>Rough scope to create a project</i>
                 {chain && !chain.name === 'Mumbai' && <>Go to Mumbai</>}
                 <RulesTitle>Conditions and rules</RulesTitle>
                 <WarningBox>
@@ -166,20 +167,20 @@ const Create = ({ setStep }) => {
                 <Summary>
                     <SumHead>Summary</SumHead>
                   <SumRow>
-                    <SumHalf align={'right'}>
+                    <SumHalf align={'left'}>
                         <SumItem><SumTitle>Title</SumTitle><SumValue>{pTitle}</SumValue></SumItem>
                         <SumItem><SumTitle>Category</SumTitle><SumValue>{category}-{subcategory}</SumValue></SumItem>
                         <SumItem><SumTitle>Destimation chain</SumTitle><SumValue>Mumbai</SumValue></SumItem>
                         <SumItem><SumTitle>Funding goal</SumTitle><SumValue>{pm1} USDC</SumValue></SumItem>
                         <SumItem><SumTitle>Owner</SumTitle><SumValue> {address}</SumValue></SumItem>
                     </SumHalf>
-                    <Divider/>
-                    <SumHalf>
-                        <SumItem><SumTitle>Reward #1</SumTitle><SumValue>{pTitle}</SumValue></SumItem>
-                        <SumItem><SumTitle>Reward #2</SumTitle><SumValue>{category}-{subcategory}</SumValue></SumItem>
-                        <SumItem><SumTitle>Reward #3</SumTitle><SumValue>Mumbai</SumValue></SumItem>
-                        <SumItem><SumTitle>Reward #4</SumTitle><SumValue>{pm1} USDC</SumValue></SumItem>
-                        <SumItem><SumTitle>Reward #5</SumTitle><SumValue> {address}</SumValue></SumItem>
+                    <EyeBox><Image src={Eye10} alt='Eye' width={'200px'}  height={'150px'}/> </EyeBox>
+                    <SumHalf align={'right'}>
+                        <SumItem><SumTitle>Reward #1</SumTitle><SumValue>{rewards[0].title} - ${rewards[0].amount}</SumValue></SumItem>
+                        {rewards.length >= 1 && <SumItem><SumTitle>Reward #2</SumTitle><SumValue>{rewards[0].title} - ${rewards[0].amount}</SumValue></SumItem>}
+                        {rewards.length >= 1 && <SumItem><SumTitle>Reward #3</SumTitle><SumValue>{rewards[0].title} - ${rewards[0].amount}</SumValue></SumItem>}
+                        {rewards.length >= 1 && <SumItem><SumTitle>Reward #4</SumTitle><SumValue>{rewards[0].title} - ${rewards[0].amount}</SumValue></SumItem>}
+                        {rewards.length >= 1 && <SumItem><SumTitle>Reward #5</SumTitle><SumValue>{rewards[0].title} - ${rewards[0].amount}</SumValue></SumItem>}
                     </SumHalf>   
                     </SumRow>
                 </Summary> : <div>Please connect your wallet</div>}

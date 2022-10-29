@@ -12,9 +12,9 @@ export const RulesContainer = styled.div`
 `
 
 export const RulesTitle = styled.p`
-    font-size: 1.1em;
-    font-weight: bold;
-    font-family: "Roboto";
+    font-size: 1.3em;
+    font-weight: normal;
+    font-family: "Neucha";
     margin-bottom: 5%;
     letter-spacing: 0.2px;
 `
@@ -70,7 +70,7 @@ export const Summary = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: black;
+    background: #1e1e1e;
     padding: 4%;
     border-radius: 45px;
     margin: 2%;
@@ -80,7 +80,7 @@ export const Summary = styled.div`
 export const SumItem = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 2%;
+    margin-bottom: 8px;
 `
 
 export const SumTitle = styled.div`
@@ -99,21 +99,22 @@ export const SumValue = styled.div`
 `
 
 export const SumHalf = styled.div`
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 8%;
+    margin-right: 8%;
     text-align: ${(props) => props.align};
 `
 
 export const SumRow = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 `
 
 export const SumHead = styled.div`
     text-align: center;
     font-family: 'Neucha';
-    font-size: 1.1em;
+    font-size: 1.3em;
     margin-bottom: 2%;
 `
 
@@ -157,4 +158,13 @@ export const InfoTag = styled.div`
     padding: 2px;
     border-radius: 5px;
     margin-right: 3%;
+`
+
+export const EyeBox = styled.div`
+    position: absolute;
+    margin-left: 24%;
+    margin-top: 2%;
+    @media (max-width: 1068px) {
+        display: none;
+    }
 `

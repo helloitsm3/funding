@@ -148,7 +148,6 @@ const Notifications = ({notis}) => {
         } 
       }
 
-
     return <Container>  
        {!profile ?<NotiBox> 
         {notis && notis.map((noti) => <NotiItem>            

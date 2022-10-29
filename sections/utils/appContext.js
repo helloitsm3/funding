@@ -13,6 +13,15 @@ export const AppProvider = (props) => {
     //Descoped temporarily  { title: "USDT", logo: "/icons/usdt.png", chainId: "", active: false },
     ],
     milestones: [],
+    rewards: [{
+      title: "Godspeed",
+      description: "Jesus will smile on you",
+      amount: 100,
+      type: "Donate",  // OR Donate OR Stream // OR Microfund
+      tokenAmount: "10", // optional 
+      tokenName: "EYE", // optional
+      tokenUrl: "https://polygonscan.com/token/0x2791bca1f2de4661ed88a30c99a7a9449aa84174", // optional
+    }],
     pTitle: "Default project title",
     pDesc: "",
     pWeb: "https://www.d3vlibrary.com",

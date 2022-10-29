@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useMoralis } from "react-moralis";
 
 import Link from "next/link"
 import Image from "next/image"
 import styled from "styled-components"
+import axios from 'axios'
+import {useAccount} from 'wagmi'
 
 import Logo from "../public/Logo.png"
 import Rainbow from '../components/buttons/Rainbow'
@@ -111,8 +113,10 @@ const Notis = styled.div`
 const Header = () => {
   const [active, setActive] = useState("Home")
   const [noti, setNoti] = useState(false)
-  const [notis, setNotis] = useState(2)
-  const { isAuthenticated, user } = useMoralis();
+  const [notis, setNotis] = useState([])
+  const [notiNumber, setNotiNumber] = useState(notis.length)
+  const { isAuthenticated } = useMoralis();
+  const {address} = useAccount()
   const header = [
     { title: "Discover", url: "" },
     { title: "Start a project", url: "/startproject" },
@@ -120,8 +124,27 @@ const Header = () => {
     { title: "My projects", url: "/my" },
   ]
 
-  // TBD map real number of new notifications from user profile - https://app.clickup.com/t/321nykk
-  // Moralis API - extract number of notifications, filter by state
+  const moralisApiConfig = {
+    headers: {
+      "X-Parse-Application-Id": `${process.env.NEXT_PUBLIC_DAPP_ID}`,
+      "Content-Type": "application/json"
+    }
+  }
+
+  const getData = async () => {
+      try {
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_DAPP}/classes/Notification?where={"user":"${address}"}`, moralisApiConfig);
+          await setNotis(res.data.results.slice(0,20));
+          await setNotiNumber(notis.length)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+  useEffect(() => {
+    getData()
+  },[])
+
   return (
     <>
       <HeadBox>
@@ -165,14 +188,7 @@ const Header = () => {
         </MenuBox>
 
         <ConnectBox>
-          {/* {connectors.map((connector) => (
-            <ConnectBtn disabled={!connector.ready} key={connector.id} onClick={() => (isConnected ? disconnect() : connect({ connector }))}>
-              {isConnected ? "Disconnect" : connector.name}
-              {!connector.ready && " (unsupported)"}
-            </ConnectBtn>
-          ))} */}
           <Rainbow />
-
           {isAuthenticated && <IconFrame onClick={() => { setNoti(!noti) }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path
@@ -181,10 +197,10 @@ const Header = () => {
                 d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
               />
             </svg>
-            {notis >= 0 && <Notis>5</Notis>}
+            {notis > 0 && <Notis>{notiNumber}</Notis>}
           </IconFrame>}
         </ConnectBox>
-        {noti && <Notifications />}
+        {noti && <Notifications notis={notis} />}
       </HeadBox>
     </>
   )

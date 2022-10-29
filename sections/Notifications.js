@@ -119,6 +119,10 @@ const Unread = styled.div`
     font-size: 0.7em;
 `
 
+const HidUnread = styled(Unread)`
+    visibility: hidden;
+`
+
 const IconWrapper = styled.div`
     padding: 1%;
 `
@@ -155,7 +159,7 @@ const Notifications = ({notis}) => {
                  <IconWrapper>{noti.type === 'projectCanceled' && <CanceledIcon width={25} height={25}/>}</IconWrapper>
                 <Col><Title>{noti.title}</Title><Desc>{noti.description}</Desc></Col>
                 <Col>
-                     {noti.isRead && <Unread>New</Unread>}
+                     {noti.isRead === false ? <Unread>New</Unread> : <HidUnread></HidUnread>}
                      <Desc>{Date.UTC(noti.createdAt)}</Desc>
                 </Col>
             </Row></Link>

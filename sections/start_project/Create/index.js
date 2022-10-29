@@ -62,10 +62,10 @@ const Create = ({ setStep }) => {
     const { appState } = useApp();
     const { pTitle, pDesc, category, subcategory, pm1, pType,rewards } = appState;
     const [ev, setEv] = useState(false)
-    const [evErr, setEvErr] = useState(false)
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
     const [oid, setOid] = useState(null)
+    const [rawEvent, setRawEvent] = useState(null)
 
     const handleBack = () => {
         setStep((prev) => (prev -= 1));
@@ -74,8 +74,12 @@ const Create = ({ setStep }) => {
     // Blockchain specific
     const { address, isDisconnected } = useAccount()
     const { chain } = useNetwork()
-    const useEv = (e) => { setEv(true) }
-    const useEvErr = (e) => { setEvErr(true) }
+    const useEv = (e) => { 
+        setEv(true) 
+        console.log(e)
+        setRawEvent(e)
+    }
+
 
     const { config } = usePrepareContractWrite({
         addressOrName: process.env.NEXT_PUBLIC_AD_DONATOR,
@@ -105,7 +109,7 @@ const Create = ({ setStep }) => {
                 "owner": address,
                 "state": 0, // Always 0 for new projects
                 "chain": "mumbai",
-                "bookmarks": [address] // Add owner to bookmark
+                "bookmarks": [address], // Add owner to bookmark
             }, head)
             console.log(res.data)
             setOid(res.data.objectId)
@@ -130,24 +134,9 @@ const Create = ({ setStep }) => {
         once: true
     })
 
-    useContractEvent({
-        addressOrName: process.env.NEXT_PUBLIC_AD_DONATOR,
-        contractInterface: donation.abi,
-        eventName: 'MicroClosed', /// TBD still not implemented
-        listener: (event) => useEvErr(event),
-        once: true
-    })
-
-    // Follow ups for myself:
-    // After confirmation, it's needed to inform user on the screen
-    // After confirmation, it's needed to PUT data to Moralis API, update state to "1" // Has to be done via Cloud // + Update project ID
-    // PID is tricky to get :) either needed to debug event log (decode useContractEvent), or we will update smart contract and "useContractRead" for special function 
-    // Out of scope - Not implemented yet event if transaction fails 
-    // TBD connect button
-    // TBD loading states cover with animation
-    // TBD animate the text 
-    // TBD style the summary and text 
-    // TBD Moralis Error state
+    // TBD Array with rewards -> Push to the DB
+    // Take PID from the event and PUT Moralis API with the update
+    // Needed to lock user on screen until this is done
 
     return (
         <MainContainer>
@@ -191,15 +180,16 @@ const Create = ({ setStep }) => {
                     <TxStatus>Transaction status
                         <LogRow><InfoTag>Info</InfoTag> Project was initiated</LogRow>
                         <LogRow><InfoTag>Info</InfoTag> ...Waiting for blockchain confirmation</LogRow>
+                        {!ev && <LogRow>Please stay on page until transactions is confirmed</LogRow>}
                         <LogRow><div>Blockchain status:</div>
                             {ev && <Ok>Success: Transaction was processed</Ok>} {evErr && <Err>Failed: Transaction failed on chain</Err>}
                         </LogRow>
                         {ev && <LogRow><InfoTag>Info</InfoTag> Your project is created on <Link href={`/project/${oid}`}><Ref> this page</Ref></Link></LogRow>}
                         {ev && <AnimBox><Lottie height={100} width={100} options={okAnim} /></AnimBox>}
-                        {evErr && <AnimBox><Lottie height={100} width={100} options={errAnim} /></AnimBox>}
+                        {error && <AnimBox><Lottie height={100} width={100} options={errAnim} /></AnimBox>}
                         {!ev && !evErr && <AnimBox><Lottie height={100} width={100} options={loadingAnim} /></AnimBox>}
                     </TxStatus>}
-                {error || evErr && <Err>Transaction failed, please contact support team to make it work</Err>}
+                {error  && <Err>Transaction failed, please contact support team to make it work</Err>}
             </RulesContainer>
         </MainContainer>
     );

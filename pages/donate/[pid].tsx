@@ -252,11 +252,9 @@ const Donate: NextPage = () => {
         </OptionReward>
         </OptionItemWrapper>
       </DonateOption>
-
       {rewardNo && <DonateWithout pid={pid} currency={currency} blockchain={blockchain} />}
       {reward1 && <DonateWithout pid={pid} currency={currency} blockchain={blockchain} />}
       {reward2 && <DonateWithout pid={pid} currency={currency} blockchain={blockchain} />}
-
     </DonateContentWrapper>
   </Container>
 }

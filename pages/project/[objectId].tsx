@@ -24,18 +24,19 @@ const Project: NextPage = () => {
       "bookmarks",
       "verified",
       "state",
+      "imageUrl",
       "pid"
       //@ts-ignore
     ]), [], { autoFetch: true },
   );
 
-  const [image, setImage] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
   const [verified, setVerified] = useState(false)
   const [title, setTitle] = useState("Default Title")
   const [description, setDescription] = useState("Default Description")
   const [category, setCategory] = useState(null)
   const [subcategory, setSubcategory] = useState(null)
-  const [pid, setPid] = useState(null)
+  const [pid, setPid] = useState()
   const [bookmarks, setBookmarks] = useState([])
   const [status, setStatus] = useState(0)
 
@@ -49,7 +50,7 @@ const Project: NextPage = () => {
       await setBookmarks(fetchDetail[0].bookmarks)
       await setVerified(fetchDetail[0].verified)
       await setStatus(fetchDetail[0].state)
-
+      await setImageUrl(fetchDetail[0].imageUrl)
     } catch (error) {
       console.log(error)
     }
@@ -69,7 +70,7 @@ const Project: NextPage = () => {
           title={title} 
           category={category} 
           subcategory={subcategory} 
-          image={image} 
+          imageUrl={imageUrl} 
           bookmarks={bookmarks}
           verified={verified}
           state={status}

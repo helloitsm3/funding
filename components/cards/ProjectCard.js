@@ -1,11 +1,8 @@
 import styled from 'styled-components'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-
+import Image from 'next/image'
 import ImgSkeleton from '../skeletons/ImgSkeleton'
 import Tag from "../../components/typography/Tag"
-
-// Blockchain related 
 import donation from '../../abi/donation.json'
 import { useContractRead } from 'wagmi'
 
@@ -73,39 +70,72 @@ const Desc = styled.div`
     margin-top: 5%;
 `
 
-const ProjectCard = ({ image, title, description, category, subcategory, link, id }) => {
-    const [pId, setId] = useState(null)
+const Days = styled.div`
+    position: absolute;
+    font-size: 0.7em;
+    font-family: 'Gemunu Libre';
+    right: 5px;
+    top: 5px;
+`
 
-    const { data } = useContractRead({
+const ProjectCard = ({ title, description, category, subcategory, link, pid, imageUrl }) => {
+
+    var bal = '0'
+    var days = '0'
+    var max = '0'
+
+    const balance = useContractRead({
         addressOrName: process.env.NEXT_PUBLIC_AD_DONATOR,
         contractInterface: donation.abi,
-        functionName: 'getFundInfo',
+        functionName: 'getFundBalance',
         chainId: 80001,
-        args: [pId],
+        args: [pid],
         watch: false,
     })
 
-    var balance = 0
-    var cap = 0
-
-    if (data) {
-        balance = data.balance.toString()
-        cap = data.max.toString()
+    if (balance.data) {
+        bal = balance.data.toString()
     }
 
-    useEffect(() => {
-        setId(id), []
+    const deadline = useContractRead({
+        addressOrName: process.env.NEXT_PUBLIC_AD_DONATOR,
+        contractInterface: donation.abi,
+        functionName: 'getFundDeadline',
+        chainId: 80001,
+        args: [pid],
+        watch: false,
     })
+
+    if (deadline.data) {
+        const d = deadline.data.toString()
+        const test = new Date(d * 1000);
+        days = test.getDate()
+    }
+
+    const cap = useContractRead({
+        addressOrName: process.env.NEXT_PUBLIC_AD_DONATOR,
+        contractInterface: donation.abi,
+        functionName: 'getFundCap',
+        chainId: 80001,
+        args: [pid],
+        watch: false,
+    })
+
+    if (cap.data) {
+        max = cap.data.toString()
+    }
+
     return <A href={link}>
         <Container>
-            <div> {!image ? <ImgSkeleton /> : <Image src={detail.image} alt={title} width={500} height={500} />}</div>
+            <Days>{days}d</Days>
+            <div> {!imageUrl ? <ImgSkeleton /> : <Image src={imageUrl} alt={title} width={'300px'} height={'300px'} />}</div>
             <Row>
                 <Row>
                     <div> {category && <Tag tag={category} color={"#000850"} />}</div>
                     <div>{subcategory && <Tag tag={subcategory} color={"#035201"} />}</div>
                 </Row>
                 <Amount>
-                    {balance} / {cap}
+                    {bal} / {max}
                 </Amount>
             </Row>
             <Title>{title}</Title>

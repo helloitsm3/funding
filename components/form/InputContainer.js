@@ -38,6 +38,7 @@ const Container = styled.div`
   font-size: 0.7em;
   color: #ff0000;
   font-family: "Montserrat";
+  }
 `;
 
 const InputContainer = ({label, name, placeholder,onChange, description, type, maxLength, isError, errorText}) => {

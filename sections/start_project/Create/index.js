@@ -65,19 +65,20 @@ const Create = ({ setStep }) => {
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
     const [oid, setOid] = useState(null)
-    const [rawEvent, setRawEvent] = useState(null)
 
     const handleBack = () => {
         setStep((prev) => (prev -= 1));
     }
 
+    console.log(rewards)
+
     // Blockchain specific
+    // TBD thrid value from event object is the PID, need to parse it from it and transform to a number
     const { address, isDisconnected } = useAccount()
     const { chain } = useNetwork()
-    const useEv = (e) => { 
+    const useEv = (event) => { 
         setEv(true) 
-        console.log(e)
-        setRawEvent(e)
+        console.log(event)
     }
 
 
@@ -110,9 +111,9 @@ const Create = ({ setStep }) => {
                 "state": 0, // Always 0 for new projects
                 "chain": "mumbai",
                 "bookmarks": [address], // Add owner to bookmark
+                "rewards": rewards,
                 "imageUrl": pImageUrl
             }, head)
-            console.log(res.data)
             setOid(res.data.objectId)
             setSuccess(true)
             setError(false)

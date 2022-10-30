@@ -34,8 +34,9 @@ const LatestProjects = ({ data, my}) => {
                             description={project.description}
                             category={project.category}
                             subcategory={project.subcategory}
+                            imageUrl={project.imageUrl}
                             link={`/project/${project.objectId}`}
-                            id={project.pid}
+                            pid={project.pid}
                         />
                     })}
             </ProjectBox>
@@ -47,8 +48,9 @@ const LatestProjects = ({ data, my}) => {
                             description={project.description}
                             category={project.category}
                             subcategory={project.subcategory}
+                            imageUrl={project.imageUrl}
                             link={`/project/${project.objectId}`}
-                            id={project.pid}
+                            pid={project.pid}
                         />
                     })}
             </ProjectBox>
@@ -60,8 +62,9 @@ const LatestProjects = ({ data, my}) => {
                             description={project.description}
                             category={project.category}
                             subcategory={project.subcategory}
+                            imageUrl={project.imageUrl}
                             link={`/project/${project.objectId}`}
-                            id={project.pid}
+                            pid={project.pid}
                         />
                     })}
             </ProjectBox>

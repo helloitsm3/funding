@@ -5,6 +5,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'wgdujpk9pprx.grandmoralis.com',
+        port: '2053',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig

@@ -211,6 +211,7 @@ const Donate: NextPage = () => {
     <SectionTitle title="Select your reward" subtitle={'Select an option below'} />
     <DonateContentWrapper>
       <DonateOption>
+       {/* @ts-ignore */}
         {tooltip && <Tooltip text='No matter from which chain you pay. Axelar will take care to route funds on target' />}
         <DonateOptionTitle>
           <Row>Blockchain <InfoBox onMouseEnter={() => { setTooltip(true) }} onMouseLeave={() => { setTooltip(false) }}> <InfoIcon width={15} /></InfoBox></Row>

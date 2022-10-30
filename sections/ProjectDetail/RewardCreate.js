@@ -9,62 +9,17 @@ import { InfoIcon } from "../../components/icons/Common";
 import { Row } from "../../components/format/Row";
 import { NextButton } from "../start_project/Category/StyleWrapper";
 import Link from "next/link";
-
-const RewardContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-left: 18%;
-  padding-right: 18%;
-  margin-top: 3%;
-`
-
-const MainContainer = styled.div`
-  padding-top: 5%;
-  margin-bottom: 10%;
-  animation: fadeIn 0.7s;
-    @keyframes fadeIn {
-        0% {
-        opacity: 0;
-        }
-        100% {
-        opacity: 1;
-        }
-    }
-`
-
-const MilestoneTitle = styled.span`
-  font-weight: bold;
-  font-size: 18px;
-`;
-
-const MainMilestoneContainer = styled.div`
-  margin-top: 20px;
-  background: linear-gradient(132.28deg, rgba(47, 47, 47, 0.3) -21.57%, rgba(0, 0, 0, 0.261) 100%);
-  border: 1px solid #3C3C3C;
-  border-radius: 5px;
-  width: 100%;
-  padding: 5%;
-  border-radius: 10px;
-`;
-
-const MilestoneContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  margin-top: 20px;
-`;
+import {MainMilestoneContainer, MilestoneContainer,MainContainer,RewardContainer } from '../../components/form/InputWrappers'
 
 
-const RewardSection = ({objectId, bookmarks, title}) => {
+const RewardCreate = ({objectId, rewards}) => {
     const pType = "Standard" // Until stream is implemented
     const [rType, setRType] = useState('Microfund')
     const [microTooltip, setMicroTooltip] = useState(false)
     const [donationTooltip, setDonationTooltip] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
-    const [reward, setReward] = useState({
+    const [newReward, setReward] = useState({
         title: "Godspeed",
         description: "Jesus will smile on you",
         amount: 100,
@@ -82,9 +37,10 @@ const RewardSection = ({objectId, bookmarks, title}) => {
         }
     }
     
-    const handleReward = async (oid) => {
+    const handleReward = async (oid, newReward) => {
+       const newRewards = [...rewards, newReward];
         try {
-          await axios.put(`${process.env.NEXT_PUBLIC_DAPP}/classes/Project/${oid}`, { 'state': 2 }, moralisApiConfig) /// This is wrong, rewrite to array
+          await axios.put(`${process.env.NEXT_PUBLIC_DAPP}/classes/Project/${oid}`, { 'rewards': newRewards }, moralisApiConfig) /// This is wrong, rewrite to array
           setSuccess(true)
           setError(false)
           handleRewardNotifications
@@ -93,18 +49,7 @@ const RewardSection = ({objectId, bookmarks, title}) => {
         }
       }
 
-    const handleRewardNotifications = async () => {
-        if (bookmarks) {
-          bookmarks.forEach(async (bookmark) => {
-            await axios.post(`${process.env.NEXT_PUBLIC_DAPP}/classes/Notification`, {
-              'title': 'Reward opportunity added',
-              'description': `Owner of project ${title} added new reward opportunity.`,
-              'type': 'rewardAdded',
-              'user': bookmark
-            }, moralisApiConfig)
-          })
-        }
-      }
+
     return <MainContainer>
         <RewardContainer>
             <MainMilestoneContainer>
@@ -153,8 +98,8 @@ const RewardSection = ({objectId, bookmarks, title}) => {
                         onChange={(e) => setReward((prev) => ({ ...prev, description: e.target.value }))}
                         type={'text'}
                     />
-                    {!success && !error && <NextButton onClick={()=>{handleReward(objectId)}}>Create reward</NextButton>}
-                    {error && <NextButton onClick={()=>{handleReward(objectId)}}>Error: Check your fields and retry</NextButton>}
+                    {!success && !error && <NextButton onClick={()=>{handleReward(objectId, newReward)}}>Create reward</NextButton>}
+                    {error && <NextButton onClick={()=>{handleReward(objectId, newReward)}}>Error: Check your fields and retry</NextButton>}
                     {success && <Link href="/my"><NextButton>Success: Back to the overview</NextButton></Link>}
                 </MilestoneContainer>
             </MainMilestoneContainer>
@@ -162,4 +107,4 @@ const RewardSection = ({objectId, bookmarks, title}) => {
     </MainContainer>
 }
 
-export default RewardSection
+export default RewardCreate

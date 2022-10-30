@@ -33,6 +33,7 @@ const My: NextPage = () => {
     const [objectId, setObjectId] = useState()
     const [bookmarks, setBookmarks] = useState([])
     const [status, setStatus] = useState()
+    const [rewards, setRewards] = useState([])
 
     // Rerender my -> Debug, console
 
@@ -52,6 +53,7 @@ const My: NextPage = () => {
             "pid",
             "bookmarks",
             "objectId",
+            "rewards",
             "state"
             // @ts-ignore
         ]), { autoFetch: true },
@@ -67,6 +69,7 @@ const My: NextPage = () => {
             await setBookmarks(fetchDetail[0].bookmarks)
             await setObjectId(fetchDetail[0].objectId)
             await setStatus(fetchDetail[0].state)
+            await setRewards(fetchDetail[0].rewards)
         } catch (error) {
             console.log(error)
         }
@@ -94,7 +97,7 @@ const My: NextPage = () => {
     return <Container>
         {address ? <div>
     {/* @ts-ignore */}
-          {title ?  <ProjectDetail 
+          {objectId ?  <ProjectDetail 
                 objectId={objectId} 
                 pid={projectId} 
                 description={description} 

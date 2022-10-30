@@ -49,14 +49,14 @@ const DonateWithout = ({ pid, currency, blockchain }) => {
         addressOrName: process.env.NEXT_PUBLIC_AD_DONATOR,
         contractInterface: donation.abi,
         functionName: 'calcOutcome',
-        args: [0, amountD]
+        args: [pid, amountD]
     })
 
     const connections = useContractRead({
         addressOrName: process.env.NEXT_PUBLIC_AD_DONATOR,
         contractInterface: donation.abi,
         functionName: 'calcInvolvedMicros',
-        args: [0, amountD]
+        args: [pid, amountD]
     })
 
     // Calculation part
@@ -64,8 +64,8 @@ const DonateWithout = ({ pid, currency, blockchain }) => {
     // https://www.npmjs.com/package/react-number-format x https://www.npmjs.com/package/rc-input-number
 
     const calcMe = () => {
-        setMulti((outcome.data).toString())
-        setConn((connections.data).toString())
+    //    setMulti((outcome.data).toString())
+   //     setConn((connections.data).toString())
     }
 
     // TBD fix the cascade for calculation

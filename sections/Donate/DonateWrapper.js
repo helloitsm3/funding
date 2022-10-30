@@ -49,7 +49,7 @@ const DonateWrapper = ({amountM, amountD, pid, blockchain}) => {
                 <>
                     {address &&
                     <div>
-                        <BalanceComponent address={address} token={token} amount={amountM + amountD} />
+                        <BalanceComponent address={address} token={token} amount={sum} />
                         <ApprovedComponent address={address} />
                     </div>}
                     <ApproveButton sum={sum} />

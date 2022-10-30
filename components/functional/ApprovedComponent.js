@@ -16,9 +16,10 @@ const ApprovedComponent = ({address}) => {
         functionName: 'allowance',
         args: [address, process.env.NEXT_PUBLIC_AD_DONATOR]
       })
+
         
     return <Container>
-        {data && <>Approved: ${data?.toString()} </>}
+        {data && <>Approved: ${data?.toString()}</>}
     </Container>
 }
 

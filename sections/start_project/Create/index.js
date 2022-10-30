@@ -182,12 +182,12 @@ const Create = ({ setStep }) => {
                         <LogRow><InfoTag>Info</InfoTag> ...Waiting for blockchain confirmation</LogRow>
                         {!ev && <LogRow>Please stay on page until transactions is confirmed</LogRow>}
                         <LogRow><div>Blockchain status:</div>
-                            {ev && <Ok>Success: Transaction was processed</Ok>} {evErr && <Err>Failed: Transaction failed on chain</Err>}
+                            {ev && <Ok>Success: Transaction was processed</Ok>} {error && <Err>Failed: Transaction failed on chain</Err>}
                         </LogRow>
                         {ev && <LogRow><InfoTag>Info</InfoTag> Your project is created on <Link href={`/project/${oid}`}><Ref> this page</Ref></Link></LogRow>}
                         {ev && <AnimBox><Lottie height={100} width={100} options={okAnim} /></AnimBox>}
                         {error && <AnimBox><Lottie height={100} width={100} options={errAnim} /></AnimBox>}
-                        {!ev && !evErr && <AnimBox><Lottie height={100} width={100} options={loadingAnim} /></AnimBox>}
+                        {!ev && !error && <AnimBox><Lottie height={100} width={100} options={loadingAnim} /></AnimBox>}
                     </TxStatus>}
                 {error  && <Err>Transaction failed, please contact support team to make it work</Err>}
             </RulesContainer>

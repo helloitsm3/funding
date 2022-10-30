@@ -63,11 +63,8 @@ const ButtonBox = styled.div`
 
 const ProjectDetailRight = ({pid, objectId, bookmarks}) => {
 
-
-    // TBD pid is not known
     // TBD Days not formatted
     // TBD Backers lacks in contract
-    // TBD  PID is not distributed correctly from the parent, right now workaround by hardocde
     var bal = '0'
     var microInvolved = '0'
     var days = '0'
@@ -92,7 +89,7 @@ const ProjectDetailRight = ({pid, objectId, bookmarks}) => {
         contractInterface: donation.abi,
         functionName: 'getFundBalance',
         chainId: 80001,
-        args: [0],
+        args: [pid],
         watch: false,
     })
 
@@ -105,7 +102,7 @@ const ProjectDetailRight = ({pid, objectId, bookmarks}) => {
         contractInterface: donation.abi,
         functionName: 'getFundDeadline',
         chainId: 80001,
-        args: [0],
+        args: [pid],
         watch: false,
     })
 
@@ -118,7 +115,7 @@ const ProjectDetailRight = ({pid, objectId, bookmarks}) => {
         contractInterface: donation.abi,
         functionName: 'getFundCap',
         chainId: 80001,
-        args: [0],
+        args: [pid],
         watch: false,
     })
 
@@ -131,7 +128,7 @@ const ProjectDetailRight = ({pid, objectId, bookmarks}) => {
         contractInterface: donation.abi,
         functionName: 'getBackers',
         chainId: 80001,
-        args: [0],
+        args: [pid],
         watch: false,
     })
 

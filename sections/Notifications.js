@@ -45,7 +45,6 @@ const NotiItem = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-bottom: 10px;
     border-bottom: 1px solid #585858;
 `
 
@@ -60,25 +59,21 @@ const Col = styled.div`
 const Row = styled.div`
     display: flex;
     flex-direction: row;
+    background: linear-gradient(132.28deg, rgba(47, 47, 47, 0.3) -21.57%, rgba(0, 0, 0, 0.261) 100%);
+    padding: 2%;
+    margin-top: 2px;
+    margin-bottom: 2px;
     cursor: pointer;
     &:hover{
         opacity: 0.9;
     }
 `
 
-const Title= styled.div`
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 1.1em;
-    line-height: 140%;
-    color: #FFFFFF;
-`
 
 const Desc = styled.div`
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 400;
+    font-family: 'Arial';
+    font-weight: 300;
+    letter-spacing: 0.2px;
     font-size: 0.9em;
     color: #FFFFFF;
 `
@@ -101,7 +96,6 @@ const Buttons = styled.div`
     font-weight: 400;
     font-size: 0.9em;
     color: #B0F6FF;
-    text-decoration: underline;
     &:hover {
         cursor: pointer;
         opacity: 0.9;
@@ -126,7 +120,9 @@ const HidUnread = styled(Unread)`
 `
 
 const IconWrapper = styled.div`
-    padding: 1%;
+    padding-right: 2%;
+    padding-left: 2%;
+    padding-top: 2%;
 `
 
 const Notifications = ({notis}) => {
@@ -163,7 +159,7 @@ const Notifications = ({notis}) => {
                     {noti.type === 'rewardAdded' && <RewardIcon width={15}/>}
                     {noti.type === 'projectUpdate' && <BellIcon/>}
                 </IconWrapper>
-                <Col><Title>{noti.title}</Title><Desc>{noti.description}</Desc></Col>
+                <Col><Desc>{noti.description}</Desc></Col>
                 <Col>
                      {noti.isRead === false ? <Unread>New</Unread> : <HidUnread></HidUnread>}
                      <Desc>{Date.UTC(noti.createdAt)}</Desc>

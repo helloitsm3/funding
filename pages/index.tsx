@@ -6,32 +6,18 @@ import Eye7 from "../public/Eye7.png";
 import { useEffect, useState, Suspense } from "react";
 import axios from "axios";
 import Footer from "../sections/Footer";
-import Eye1 from '../public/Eye1.png'
+import {cats} from '../data/cats'
 import { LandingSvg } from "../sections/Landing/LandingMain";
-import { useApp } from "../sections/utils/appContext";
 import dynamic from 'next/dynamic'
 
 const LatestProjects = dynamic(() => import('../sections/Landing/LatestProjects'), {
-  suspense: true,
+  suspense: false,
 })
 
-const Categories = dynamic(() => import('../sections/Landing/Categories'), {
-  suspense: true,
-})
 
 const Features = dynamic(() => import('../sections/Landing/Features'), {
-  suspense: true,
+  suspense: false,
 })
-
-
-const ImageBox = styled.div`
-    position: absolute;
-    right: 0;
-    z-index: -1;
-    @media (min-width: 1768px) {
-      top: 200px;
-    }
-`
 
 const Container = styled.div`
   position: relative;
@@ -46,12 +32,35 @@ const EyeSevenBox = styled.div`
   position: relative;
 `;
 
+const Categories = styled.div`
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 5%;
+    gap: 4%;
+    justify-content: center;
+`
+const Cat = styled.div`
+    font-size: 1em;
+    font-family: 'Montserrat';
+    &:hover{
+        cursor: pointer;
+        opacity: 0.9;
+    }
+`
+
+const ACat = styled(Cat)`
+    color: white;
+`
+
+
 const Home: NextPage = () => {
   const [projects, setProjects] = useState([]);
-  //@ts-ignore
-  const { appState } = useApp();
-  //@ts-ignore
-  const { filterCat } = { ...appState };
+  const [category, setCategory] = useState('All')
+
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -65,12 +74,12 @@ const Home: NextPage = () => {
       },
     };
     try {
-      if (filterCat === "All") {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_DAPP}/classes/Project`, config);
+      if (category === "All") {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_DAPP}/classes/Project?where={"state":1}`, config);
         setProjects(res.data.results);
       }
       else {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_DAPP}/classes/Project?where={"category":"${filterCat}"}`, config);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_DAPP}/classes/Project?where={"category":"${category}", "state": 1}`, config);
         setProjects(res.data.results);
       }
     } catch (error) {
@@ -78,8 +87,18 @@ const Home: NextPage = () => {
     }
   };
 
+  const handleCat = async(cat) => {
+    try {
+      await setCategory(cat)
+      await getProjects()
+    } catch(err) {
+        console.log(err)
+      }
+  }
+
+
   return (
-    <Suspense fallback={`Loading...`}>
+    <Suspense fallback={`...`}>
       <Container>
         <Head>
           <title>Eyeseek Funding</title>
@@ -89,10 +108,14 @@ const Home: NextPage = () => {
         <LandingSvg width={'100%'} height={'100%'}/>
         {/* <ImageBox><Image src={Eye1} alt='Eye1' width={'1000px'} /></ImageBox> */}
         <Features />
-        <Categories />
-        <LatestProjects data={projects} my={false} />
+        <Categories>
+            {cats.map((cat) =>
+             <div key={cat}>{cat === category ? <Cat onClick={handleCat(cat)}>{cat}</Cat> : <ACat  onClick={()=>{handleCat(cat)}}>{cat}</ACat>}</div>
+        )}
+        </Categories>
+        <LatestProjects data={projects} my={false}/>
         <EyeSevenBox>
-        <Image src={Eye7} alt="Eye7" width={"400%"} height={"40%"} />
+        <Image src={Eye7} alt="Eye7" width={"350px"} height={"30px"} />
         </EyeSevenBox>
 
 

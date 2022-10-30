@@ -1,15 +1,15 @@
-import styled from "styled-components";
 import { useState } from 'react'
 import axios from 'axios'
 import InputContainer from "../../components/form/InputContainer";
 import { NextButton } from "../start_project/Category/StyleWrapper";
-import Link from "next/link";
 import {MainMilestoneContainer, MilestoneContainer,MainContainer ,RewardContainer} from '../../components/form/InputWrappers'
+import { useRouter } from 'next/router';
 
 
 
 const UpdateCreate = ({objectId, bookmarks, title}) => {
     const [success, setSuccess] = useState(false)
+    const router = useRouter()
     const [error, setError] = useState(false)
     const [url, setUrl] = useState('URL example')
 
@@ -19,14 +19,13 @@ const UpdateCreate = ({objectId, bookmarks, title}) => {
           "Content-Type": "application/json"
         }
     }
-
-    // Display updates
     // HTTPS validation
+    // Router.back
     
     const handleUpdate = async (oid) => {
         try {
           await axios.post(`${process.env.NEXT_PUBLIC_DAPP}/classes/Update`, { 
-            'url': {url},
+            'url': url,
             'project': oid 
           }, moralisApiConfig) /// This is wrong, rewrite to array
           setSuccess(true)
@@ -61,8 +60,8 @@ const UpdateCreate = ({objectId, bookmarks, title}) => {
                         type={'text'}
                     />
                     {!success && !error && <NextButton onClick={()=>{handleUpdate(objectId)}}>Sent update notification</NextButton>}
-                    {error && <NextButton onClick={()=>{handleReward(objectId)}}>Technical error: Please try again later</NextButton>}
-                    {success && <Link href="/my"><NextButton>Success: Back to the overview</NextButton></Link>}
+                    {error && <NextButton onClick={()=>{handleUpdate(objectId)}}>Technical error: Please try again later</NextButton>}
+                    {success && <NextButton onClick={() => router.push('/')}>Success: Back to the overview</NextButton>}
                 </MilestoneContainer>
             </MainMilestoneContainer>
         </RewardContainer>

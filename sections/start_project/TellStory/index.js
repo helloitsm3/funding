@@ -1,7 +1,7 @@
 import {FormStyle, Mandatory, TellContainer} from "./StyleWrapper";
 import {useState} from 'react'
 import {useApp} from "../../utils/appContext";
-import {ButtonContainer, DisButton, MainContainer, NextButton} from "../Category/StyleWrapper";
+import {ButtonContainer, MainContainer, NextButton} from "../Category/StyleWrapper";
 import SectionTitle from "../../../components/typography/SectionTitle";
 import InputContainer from "../../../components/form/InputContainer";
 import Moralis from "moralis-v1";
@@ -13,7 +13,7 @@ const TellStory = ({ setStep }) => {
   const { pTitle, pDesc, pWeb, pSocial } = { ...appState };
   const [image, setImage] = useState(null);
 
-  const HTTPS_URL_REGEX = /^((https):\/\/)(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
+  const HTTPS_URL_REGEX = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 
   const formik = useFormik({
     initialValues: {
@@ -25,15 +25,15 @@ const TellStory = ({ setStep }) => {
     validateOnChange: false,
     validateOnBlur: true,
     validationSchema: Yup.object({
-      title: Yup.string().required("Title is required field!"),
-      description: Yup.string().required("Description is required field!"),
-      website: Yup.string().required("Website is required field!").matches(
+      title: Yup.string().required("Title is required field"),
+      description: Yup.string().required("Description is required field"),
+      website: Yup.string().required("Website is required field").matches(
           HTTPS_URL_REGEX,
-          'Link needs to have https prefix only!'
+          'References are accepted with HTTPS prefix only'
       ),
       socials: Yup.string().required("Socials is required field!").matches(
           HTTPS_URL_REGEX,
-          'Link needs to have https prefix only!'
+          'References are accepted with HTTPS prefix only'
       ),
     }),
     onSubmit: (values) => {
@@ -44,9 +44,9 @@ const TellStory = ({ setStep }) => {
 
   const story_form = [
     { title: "Title", name: "title", p: pTitle, description: "Project title will help to find your project easily", text_field: false, maxLength: 60 },
-    { title: "Description", name: "description",  p: pDesc, description: "Describe your project value in few sentences", text_field: true, maxLength: 135 },
-    { title: "Website", name: "website", p: pWeb, description: "Provide website with your project detail", text_field: false, maxLength: 60 },
-    { title: "Socials", name: "socials", p: pSocial, description: "Link to your primary socials. (Twitter, Instagram, Facebook, etc.)", text_field: false, maxLength: 60 },
+    { title: "Description", name: "description",  p: pDesc, description: "Describe your project value in few sentences", text_field: true, maxLength: 235 },
+    { title: "Website", name: "website", p: pWeb, description: "Provide website with your project detail", text_field: false, maxLength: 120 },
+    { title: "Socials", name: "socials", p: pSocial, description: "Link to your primary socials. (Twitter, Instagram, Facebook, etc.)", text_field: false, maxLength: 100 },
   ];
 
   const handleClick = () => {

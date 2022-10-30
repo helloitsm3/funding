@@ -23,7 +23,7 @@ const BlankSpace = styled.div`
 
 const My: NextPage = () => {
     const { address } = useAccount()
-    const [image, setImage] = useState(null)
+    const [imageUrl, setImageUrl] = useState(null)
     const [title, setTitle] = useState(null)
     const [description, setDescription] = useState(null)
     const [category, setCategory] = useState(null)
@@ -54,6 +54,7 @@ const My: NextPage = () => {
             "bookmarks",
             "objectId",
             "rewards",
+            "imageUrl",
             "state"
             // @ts-ignore
         ]), { autoFetch: true },
@@ -70,6 +71,7 @@ const My: NextPage = () => {
             await setObjectId(fetchDetail[0].objectId)
             await setStatus(fetchDetail[0].state)
             await setRewards(fetchDetail[0].rewards)
+            await setImageUrl(fetchDetail[0].imageUrl)
         } catch (error) {
             console.log(error)
         }
@@ -104,7 +106,7 @@ const My: NextPage = () => {
                 title={title} 
                 category={category} 
                 subcategory={subcategory} 
-                image={image} 
+                imageUrl={imageUrl} 
                 state={status}
                 bookmarks={bookmarks}
                 my /> : <NotProject/>}

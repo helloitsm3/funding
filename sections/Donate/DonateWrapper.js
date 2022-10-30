@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { usePrepareContractWrite, useContractWrite, useAccount } from "wagmi";
-import {useState} from 'react'
-
+import {useState, useEffect} from 'react'
+import axios from 'axios';
 import BalanceComponent from '../../components/functional/BalanceComponent'
 import ApprovedComponent from '../../components/functional/ApprovedComponent'
 import Button from "../../components/buttons/Button";
@@ -23,6 +23,16 @@ const DonateWrapper = ({amountM, amountD, pid, blockchain}) => {
     const { address } = useAccount();
     const token = process.env.NEXT_PUBLIC_AD_TOKEN
     const [explorer, setExplorer] = useState('https://mumbai.polygonscan.com/tx/')
+    const [project, setProject] = useState([])
+    const [oid, setOid] = useState()
+    const [bookmarks, setBookmarks] = useState()
+
+    const moralisConfig = {
+        headers: {
+          "X-Parse-Application-Id": `${process.env.NEXT_PUBLIC_DAPP_ID}`,
+          "Content-Type": "application/json"
+        }
+      }
 
     const { config, error } = usePrepareContractWrite({
         addressOrName: process.env.NEXT_PUBLIC_AD_DONATOR,
@@ -40,11 +50,40 @@ const DonateWrapper = ({amountM, amountD, pid, blockchain}) => {
         } else if (blockchain === 'bsc') {
             setExplorer('https://bscscan.com/tx/')
         }
+        if (project.length === 1){
+            updateBookmark(oid, bookmarks)
+        }
     }
     const sum = parseInt(amountM) + parseInt(amountD);
 
+    const getProjectDetail = async (pid) => {
+        try {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_DAPP}/classes/Project?where={"pid":"${pid}"}`, moralisConfig)
+            await setProject(res.data.results);
+            await setBookmarks(project[0].bookmarks)
+            await setOid(project[0].objectId)
+        } catch (err){
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        getProjectDetail(pid)
+    }, [])
+
+
+    const updateBookmark = async (oid, bookmarks) => {
+        const newBookmarks = [...bookmarks, address];
+        try {
+          await axios.put(`${process.env.NEXT_PUBLIC_DAPP}/classes/Project/${oid}`, { 'bookmarks': newBookmarks }, moralisConfig)
+        } catch (error) {
+          console.log(error)
+        }
+    }
+
     return <div>
         <DonateButtonWrapper>
+            {pid}
             {isSuccess ? <SuccessIcon /> : (
                 <>
                     {address &&

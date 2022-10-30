@@ -139,8 +139,6 @@ const IconWrapper = styled.div`
 const Notifications = ({notis}) => {
     const [profile, setProfile] = useState(false)
 
-
-
     const moralisApiConfig = {
         headers: {
           "X-Parse-Application-Id": `${process.env.NEXT_PUBLIC_DAPP_ID}`,

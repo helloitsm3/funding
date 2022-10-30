@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic'
 import donation from '../../abi/donation.json'
 import { useContractWrite, useNetwork, useContractEvent, usePrepareContractWrite } from 'wagmi'
 import UpdateCreate from './UpdateCreate'
+import { useMoralisFile } from "react-moralis"
 
 const RewardCreate = dynamic(() => import('./RewardCreate'), {
   suspense: false,
@@ -129,7 +130,7 @@ const Inactive = styled.div`
 `
 
 // @param "my" indicates whether component visualized in context of MyProjects or Landing page
-const ProjectDetail = ({ objectId, pid, title, description, category, subcategory, image, bookmarks, verified, my, state }) => {
+const ProjectDetail = ({ objectId, pid, title, description, category, subcategory, imageUrl, bookmarks, verified, my, state }) => {
   const [cancelTooltip, setCancelTooltip] = useState(false)
   const [verifiedTooltip, setVerifiedTooltip] = useState(false)
   const [rewardTooltip, setRewardTooltip] = useState(false)
@@ -139,6 +140,8 @@ const ProjectDetail = ({ objectId, pid, title, description, category, subcategor
   const [canceled, setCanceled] = useState(false)
   const [error, setError] = useState(false)
   const { chain } = useNetwork()
+
+  console.log(imageUrl)
 
 
   // TBD add prepare contract write - To make blockchain part work
@@ -231,7 +234,7 @@ const ProjectDetail = ({ objectId, pid, title, description, category, subcategor
             }</> : <></>}
         </ActionPanel>}
         <LeftPart>
-          {!image ? <ImgSkeleton /> : <Image src={detail.image} alt={title} width={500} height={500} />}
+          {!imageUrl ? <ImgSkeleton /> : <Image src={imageUrl} alt={title} width={500} height={500} />}
           <Categories>
             {category && <Tag tag={category} color={"#000850"} />}
             {subcategory && <Tag tag={subcategory} color={"#035201"} />}

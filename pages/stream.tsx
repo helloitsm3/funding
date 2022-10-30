@@ -1,23 +1,47 @@
 import { useState, } from "react";
 import { Framework } from "@superfluid-finance/sdk-core";
-import { getDefaultProvider } from 'ethers'
 import type { NextPage } from "next";
 import { useAccount, useProvider, useSigner } from 'wagmi'
 
 
 const Stream: NextPage = () => {
-  //const {data: signer} = useSigner()
   const { address } = useAccount();
-  const [recipient, setRecipient] = useState(address)
+  const [recipient, setRecipient] = useState('0xd4924261323DAc5fAAD8524864d35D43d7190F92')
   const [flowRate, setFlowRate] = useState(1);
   const provider = useProvider()
   const { data: signer } = useSigner()
+
+  async function deleteFlow() {
+    const sf = await Framework.create({
+      provider: provider,
+      chainId: 80001
+    })
+    const DAIxContract = await sf.loadSuperToken("fDAIx");
+    const DAIx = DAIxContract.address;
+    try {
+      const deleteFlowOperation = sf.cfaV1.deleteFlow({
+        sender: address,
+        receiver: recipient,
+        superToken: DAIx
+        // userData?: string
+      });
+  
+      console.log("Deleting your stream...");
+  
+      await deleteFlowOperation.exec(signer);
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
   async function createNewFlow() {
     const sf = await Framework.create({
       provider: provider,
       chainId: 80001
     })
+    
     const DAIxContract = await sf.loadSuperToken("fDAIx");
     const DAIx = DAIxContract.address;
     const flowRate = 1;
@@ -53,6 +77,9 @@ const Stream: NextPage = () => {
         }}
       >
         Create stream
+      </button>
+      <button onClick={()=>{deleteFlow()}}>
+        Delete stream
       </button>
 
       <div>

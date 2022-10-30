@@ -8,16 +8,9 @@ import axios from "axios";
 import Footer from "../sections/Footer";
 import {cats} from '../data/cats'
 import { LandingSvg } from "../sections/Landing/LandingMain";
-import dynamic from 'next/dynamic'
+import LatestProjects from "../sections/Landing/LatestProjects";
+import Features from "../sections/Landing/Features";
 
-const LatestProjects = dynamic(() => import('../sections/Landing/LatestProjects'), {
-  suspense: false,
-})
-
-
-const Features = dynamic(() => import('../sections/Landing/Features'), {
-  suspense: false,
-})
 
 const Container = styled.div`
   position: relative;
@@ -98,7 +91,7 @@ const Home: NextPage = () => {
 
 
   return (
-    <Suspense fallback={`...`}>
+    <>
       <Container>
         <Head>
           <title>Eyeseek Funding</title>
@@ -134,7 +127,7 @@ const Home: NextPage = () => {
           `}
         </Script> */}
       </Container>
-    </Suspense>
+    </>
   );
 };
 

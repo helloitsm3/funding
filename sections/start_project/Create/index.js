@@ -60,7 +60,7 @@ const texts = {
 
 const Create = ({ setStep }) => {
     const { appState } = useApp();
-    const { pTitle, pDesc, category, subcategory, pm1, pType,rewards } = appState;
+    const { pTitle, pDesc, category, subcategory, pm1, pType,rewards, pImageUrl } = appState;
     const [ev, setEv] = useState(false)
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
@@ -110,6 +110,7 @@ const Create = ({ setStep }) => {
                 "state": 0, // Always 0 for new projects
                 "chain": "mumbai",
                 "bookmarks": [address], // Add owner to bookmark
+                "imageUrl": pImageUrl
             }, head)
             console.log(res.data)
             setOid(res.data.objectId)

@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const FormStyle = styled.form`
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 20px;
   background: linear-gradient(132.28deg, rgba(47, 47, 47, 0.3) -21.57%, rgba(0, 0, 0, 0.261) 100%);
   border: 1px solid #3C3C3C;
@@ -14,43 +15,20 @@ export const FormStyle = styled.form`
   }
 
   .custom-file-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px dashed #ccc;
     padding: 6px 12px;
     cursor: pointer;
     border-radius: 5px;
-    padding: 100px;
     display: flex;
+    height: 350px;
     text-align: center;
     margin-bottom: 10px;
   }
 
   .input-span {
-    width: 100%;
-  }
-`;
-
-export const InputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 80px;
-  font-family: "Montserrat";
-  .input_label {
-    min-width: 100px;
-  }
-
-  .input_style {
-    text-decoration: none;
-    padding: 12px 10px;
-    border-radius: 5px;
-    border-style: none;
-    width: 100%;
-  }
-
-  .input_description {
-    font-size: 0.7em;
-  }
-
-  .input_container {
     width: 100%;
   }
 `;

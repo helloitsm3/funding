@@ -44,10 +44,11 @@ const Category = ({ setStep }) => {
         cursor: 'pointer'
       }
     }),
-    option: (provided) => ({
+    option: (provided, state) => ({
       ...provided,
       fontSize: '0.9em',
       color: '#B0F6FF',
+      background: state.isSelected ? 'rgba(107, 255, 255, 0.2)' : 'transparent',
       '&:hover': {
         background: 'rgba(107, 255, 255, 0.05)',
         cursor: 'pointer'

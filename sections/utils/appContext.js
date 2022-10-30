@@ -27,6 +27,7 @@ export const AppProvider = (props) => {
     pWeb: "https://www.d3vlibrary.com",
     pSocial: "https://twitter.com/d3v_library",
     pType: "Standard", // Stream vs Standard
+    pImageUrl: "",
     cateogry: null,
     subcategory: null,
     filterCat: "All",

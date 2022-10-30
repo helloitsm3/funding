@@ -58,10 +58,13 @@ type AppProps = {
 };
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const serverUrl = process.env.NEXT_PUBLIC_DAPP as string;
+  const appId = process.env.NEXT_PUBLIC_DAPP_ID as string;
+
   return (
     <Container>
       <WagmiConfig client={client}>
-        <MoralisProvider appId="M7wQiYLcbda4yH7hVX2W5ksbJo4xS74oNVKGZk0C" serverUrl="https://wgdujpk9pprx.grandmoralis.com:2053/server">
+        <MoralisProvider appId={appId} serverUrl={serverUrl}>
           <SessionProvider session={pageProps.session} refetchInterval={10000}>
             <RainbowKitProvider chains={chains}>
               <Head>

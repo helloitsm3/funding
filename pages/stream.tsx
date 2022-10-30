@@ -46,7 +46,7 @@ const Stream: NextPage = () => {
     const DAIx = DAIxContract.address;
     const flowRate = 1;
     try {
-      const createFlowOperation = sf.cfaV1.createFlow({
+      const createFlowOperation = sf.cfaV1.createFlow({š
         //@ts-ignore
         receiver: address,
         //@ts-ignore

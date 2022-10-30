@@ -16,12 +16,10 @@ const ProjectBox = styled.div`
     gap: 2%;
 `
 /// @notice "my" indicates whether component visualized in context of MyProjects or Landing page
-const LatestProjects = ({ data, my }) => {
+const LatestProjects = ({ data, my}) => {
 
     // TBD filter for personalization
     console.log(data)
-    const filteredTech = data.filter((project) => {project.state === 1}) // Wrong, empty array
-    console.log(filteredTech)
     const filteredFirst = data.slice(0, 6)
     const filteredSecond = data.slice(7, 13)
     const filteredThird = data.slice(14, 20)

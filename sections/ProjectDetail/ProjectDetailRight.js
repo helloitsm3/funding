@@ -1,4 +1,3 @@
-import {useState} from 'react'
 import styled from 'styled-components'
 import donation from '../../abi/donation.json'
 import { useContractRead } from 'wagmi'
@@ -63,8 +62,6 @@ const ButtonBox = styled.div`
 
 const ProjectDetailRight = ({pid, objectId, bookmarks}) => {
 
-    // TBD Days not formatted
-    // TBD Backers lacks in contract
     var bal = '0'
     var microInvolved = '0'
     var days = '0'
@@ -107,7 +104,9 @@ const ProjectDetailRight = ({pid, objectId, bookmarks}) => {
     })
 
     if (deadline.data) {
-        days = deadline.data.toString()
+        const d = deadline.data.toString()
+        const test = new Date(d * 1000);
+        days = test.getDate()
     }
 
     const cap = useContractRead({

@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useState } from 'react'
 import axios from 'axios'
 import { TabRow, TooltipBox, IconBox } from "../start_project/SetRewards/StyleWrapper";
@@ -8,13 +7,14 @@ import Tooltip from "../../components/Tooltip";
 import { InfoIcon } from "../../components/icons/Common";
 import { Row } from "../../components/format/Row";
 import { NextButton } from "../start_project/Category/StyleWrapper";
-import Link from "next/link";
+import { useRouter } from 'next/router';
 import {MainMilestoneContainer, MilestoneContainer,MainContainer,RewardContainer } from '../../components/form/InputWrappers'
 
 
 const RewardCreate = ({objectId, rewards}) => {
     const pType = "Standard" // Until stream is implemented
     const [rType, setRType] = useState('Microfund')
+    const router = useRouter()
     const [microTooltip, setMicroTooltip] = useState(false)
     const [donationTooltip, setDonationTooltip] = useState(false)
     const [success, setSuccess] = useState(false)
@@ -100,7 +100,7 @@ const RewardCreate = ({objectId, rewards}) => {
                     />
                     {!success && !error && <NextButton onClick={()=>{handleReward(objectId, newReward)}}>Create reward</NextButton>}
                     {error && <NextButton onClick={()=>{handleReward(objectId, newReward)}}>Error: Check your fields and retry</NextButton>}
-                    {success && <Link href="/my"><NextButton>Success: Back to the overview</NextButton></Link>}
+                    {success && <NextButton onClick={() => router.push('/')}>Success: Back to the overview</NextButton>}
                 </MilestoneContainer>
             </MainMilestoneContainer>
         </RewardContainer>

@@ -6,6 +6,11 @@ import Preferences from './Preferences'
 import {CanceledIcon} from '../components/icons/Notifications'
 import { RewardIcon } from '../components/icons/Common'
 import { BellIcon } from '../components/icons/Landing'
+import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
+
+TimeAgo.addDefaultLocale(en)
 
 const Container = styled.div`
     position: absolute;
@@ -78,6 +83,12 @@ const Desc = styled.div`
     color: #FFFFFF;
 `
 
+const Ago = styled.div`
+    font-family: 'Arial';
+    font-size: 0.7em;
+    color: white;
+`
+
 const ButtonRow = styled.div`
     position: absolute; 
     display: flex;
@@ -128,6 +139,8 @@ const IconWrapper = styled.div`
 const Notifications = ({notis}) => {
     const [profile, setProfile] = useState(false)
 
+
+
     const moralisApiConfig = {
         headers: {
           "X-Parse-Application-Id": `${process.env.NEXT_PUBLIC_DAPP_ID}`,
@@ -159,10 +172,10 @@ const Notifications = ({notis}) => {
                     {noti.type === 'rewardAdded' && <RewardIcon width={15}/>}
                     {noti.type === 'projectUpdate' && <BellIcon/>}
                 </IconWrapper>
-                <Col><Desc>{noti.description}</Desc></Col>
+                <Col><Desc>{noti.description}</Desc><Ago><ReactTimeAgo date={noti.createdAt} locale="en-US"/></Ago></Col>
                 <Col>
                      {noti.isRead === false ? <Unread>New</Unread> : <HidUnread></HidUnread>}
-                     <Desc>{Date.UTC(noti.createdAt)}</Desc>
+             
                 </Col>
             </Row></Link>
             </NotiItem>)}

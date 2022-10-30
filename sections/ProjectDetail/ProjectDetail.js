@@ -12,21 +12,22 @@ import { CanceledTypo } from '../../components/icons/Typography'
 import dynamic from 'next/dynamic'
 import donation from '../../abi/donation.json'
 import { useContractWrite, useNetwork, useContractEvent, usePrepareContractWrite } from 'wagmi'
+import UpdateCreate from './UpdateCreate'
 
 const RewardCreate = dynamic(() => import('./RewardCreate'), {
-  suspense: true,
+  suspense: false,
 })
 
 const UpdateOverview = dynamic(() => import('./UpdateOverview'), {
-  suspense: true,
+  suspense: false,
 })
 
 const RewardList = dynamic(() => import('./RewardList'), {
-  suspense: true,
+  suspense: false,
 })
 
 const ProjectDetailRight = dynamic(() => import('./ProjectDetailRight'), {
-  suspense: true,
+  suspense: false,
 })
 
 const Container = styled.div`

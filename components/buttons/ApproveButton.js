@@ -72,7 +72,7 @@ const ApproveButton = (sum) => {
         addressOrName: process.env.NEXT_PUBLIC_AD_TOKEN,
         contractInterface: token.abi,
         functionName: 'approve',
-        args: [0x2107B0F3bB0ccc1CcCA94d641c0E2AB61D5b8F3E, amount],
+        args: [process.env.NEXT_PUBLIC_AD_DONATOR, amount],
     })
 
 

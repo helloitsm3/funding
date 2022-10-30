@@ -28,8 +28,7 @@ export const AppProvider = (props) => {
     pSocial: "https://twitter.com/d3v_library",
     pType: "Standard", // Stream vs Standard
     cateogry: null,
-    subcategory: null,
-    filterCat: "All",
+    subcategory: null
   });
 
   return (
